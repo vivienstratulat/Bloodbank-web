@@ -1,5 +1,6 @@
 package com.example.bloodPage.controller;
 
+import com.example.bloodPage.entity.Appointment;
 import com.example.bloodPage.entity.Doctor;
 import com.example.bloodPage.entity.Donor;
 import com.example.bloodPage.service.DoctorService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -52,6 +54,15 @@ public class DoctorController {
             return (ResponseEntity<Doctor>) ResponseEntity.notFound();
     }
 
+    @PostMapping("/confirmAppointment/{id}")
+    ResponseEntity<Appointment> confirmAppointment(@PathVariable UUID id) {
+        Appointment confirmedAppointment = doctorService.confirmAppointment(id);
+        if (confirmedAppointment != null)
+            return ResponseEntity.ok(confirmedAppointment);
+        else
+            return (ResponseEntity<Appointment>) ResponseEntity.notFound();
+
+    }
 
 
 

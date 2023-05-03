@@ -49,8 +49,10 @@ public class UserServiceImpl implements UserService {
         Optional<User> foundUser= userRepository.findByEmail(email);
         if(foundUser.isPresent())
             return foundUser.get();
-        else
+        else {
+            System.out.println("problema la userserviceimpl");
             return null;
+        }
     }
 
 

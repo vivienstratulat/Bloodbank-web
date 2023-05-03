@@ -10,12 +10,15 @@ import com.example.bloodPage.service.AppointmentService;
 import com.example.bloodPage.service.DonorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService {
+public  class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private final AppointmentRepository appointmentRepository;
     @Autowired
@@ -25,6 +28,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final DoctorServiceImpl doctorServiceImpl;
     @Autowired
     private final DonorServiceImpl donorServiceImpl;
+
 
     public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DonorRepository donorRepository, CenterRepository centerRepository, DoctorServiceImpl doctorServiceImpl, DonorServiceImpl donorServiceImpl) {
         this.appointmentRepository = appointmentRepository;
@@ -38,13 +42,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
     @Override
+    @Transactional
     public void saveAppointment(Appointment appointment) {
+        if(appointment.getCenter().capacity==0)
+            throw new RuntimeException("This center is full");
         Appointment newAppointment=new Appointment();
         newAppointment.setDatetime(appointment.getDatetime());
         newAppointment.setCenter(appointment.getCenter());
 
         newAppointment.setDonor(appointment.getDonor());
-        newAppointment.setConfirmed(false);
+        newAppointment.setConfirmed("not confirmed");
 
         Doctor doctor= doctorServiceImpl.findDoctorWithMinAppointments();
         newAppointment.setDoctor(doctor);
@@ -84,5 +91,16 @@ appointmentRepository.deleteById(id);
     public List<Appointment> findAllAppointments() {
         List<Appointment> appointments=appointmentRepository.findAll();
         return appointments;
+    }
+
+    @Override
+    public List<Appointment> findAllDoctorAppointmentToday(Doctor doctor) {
+        List<Appointment> foundAppointments=appointmentRepository.findAppointmentsByDoctor(doctor);
+        for(Appointment appointment:foundAppointments){
+            if(appointment.getDatetime().getDay()!=LocalDateTime.now().getDayOfMonth())
+                foundAppointments.remove(appointment);
+        }
+       // foundAppointments.stream().filter(appointment -> appointment.getDatetime().getDay()==(LocalDateTime.now().getDayOfMonth()));
+        return foundAppointments;
     }
 }

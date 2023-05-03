@@ -104,4 +104,15 @@ public class DoctorServiceImpl implements DoctorService {
         return minEntry.getKey();
     }
 
+    @Override
+    public Appointment confirmAppointment(UUID id) {
+        Optional<Appointment> appointment=appointmentRepository.findById(id);
+        if(appointment.isPresent()){
+            Appointment appointment1=appointment.get();
+            appointment1.setConfirmed("confirmed");
+            return appointmentRepository.save(appointment1);
+        }
+        else return null;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.bloodPage.service;
 
+import com.example.bloodPage.entity.Appointment;
 import com.example.bloodPage.entity.Doctor;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public interface DoctorService {
     Doctor getDoctorById(UUID id);
     List<Doctor> getDoctors();
     public Doctor findDoctorWithMinAppointments();
+    public Appointment confirmAppointment(UUID id);
 
 
 

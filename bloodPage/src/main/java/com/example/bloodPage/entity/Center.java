@@ -48,5 +48,8 @@ public class Center {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+    public void decrementCapacity(){
+        this.capacity--;
+    }
 }
 

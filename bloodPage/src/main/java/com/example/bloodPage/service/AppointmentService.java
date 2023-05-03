@@ -19,4 +19,5 @@ public interface AppointmentService {
     public Appointment findAppointmentById(UUID id);
     public List<Appointment> findAllDoctorAppointments(Doctor doctor);
     List<Appointment> findAllAppointments();
+    List<Appointment> findAllDoctorAppointmentToday(Doctor doctor);
 }

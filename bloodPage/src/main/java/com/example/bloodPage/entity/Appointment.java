@@ -2,6 +2,7 @@ package com.example.bloodPage.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,19 +15,19 @@ public class Appointment {
     public UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "donor_id")
     public Donor donor;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     public Doctor doctor;
 
-    @ManyToOne
+   @ManyToOne
     @JoinColumn(name = "center_id")
     public Center center;
 
     public Date datetime;
-    boolean confirmed;
+    public String confirmed;
     public Appointment() {
     }
 
@@ -38,15 +39,15 @@ public class Appointment {
         this.datetime = datetime;
     }
 
-    public boolean isConfirmed() {
+    public String isConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(boolean confirmed) {
+    public void setConfirmed(String confirmed) {
         this.confirmed = confirmed;
     }
 
-    public Appointment(Donor donor, Doctor doctor, Center center, Date datetime, boolean confirmed) {
+   public Appointment(Donor donor, Doctor doctor, Center center, Date datetime,String confirmed) {
         this.donor = donor;
         this.doctor = doctor;
         this.center = center;
