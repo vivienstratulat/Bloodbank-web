@@ -9,6 +9,7 @@ import com.example.bloodPage.service.CenterService;
 import com.example.bloodPage.service.DoctorService;
 import com.example.bloodPage.service.DonorService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -77,6 +78,7 @@ public class AppointmentController {
         emailService.sendEmail("stratulatvivienn@gmail.com","hellooooooooooooooooo");
         return "Email sent successfully";
     }*/
+
 
 
 

@@ -1,9 +1,11 @@
 package com.example.bloodPage.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 
@@ -26,17 +28,18 @@ public class Appointment {
     @JoinColumn(name = "center_id")
     public Center center;
 
-    public Date datetime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    public LocalDate date;
     public String confirmed;
     public Appointment() {
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public LocalDate getDatetime() {
+        return date;
     }
 
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
+    public void setDatetime(LocalDate datetime) {
+        this.date = datetime;
     }
 
     public String isConfirmed() {
@@ -47,11 +50,11 @@ public class Appointment {
         this.confirmed = confirmed;
     }
 
-   public Appointment(Donor donor, Doctor doctor, Center center, Date datetime,String confirmed) {
+   public Appointment(Donor donor, Doctor doctor, Center center, LocalDate datetime,String confirmed) {
         this.donor = donor;
         this.doctor = doctor;
         this.center = center;
-        this.datetime = datetime;
+        this.date = datetime;
         this.confirmed = confirmed;
     }
 

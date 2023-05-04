@@ -6,6 +6,7 @@ import com.example.bloodPage.entity.Doctor;
 import com.example.bloodPage.entity.Donor;
 import com.example.bloodPage.entity.Center;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,4 +21,6 @@ public interface AppointmentService {
     public List<Appointment> findAllDoctorAppointments(Doctor doctor);
     List<Appointment> findAllAppointments();
     List<Appointment> findAllDoctorAppointmentToday(Doctor doctor);
+    void sendAppointmentReminders();
+    //List<Appointment> findAppointmentsByDate(LocalDate date);
 }

@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,4 +25,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     List<Appointment> findUserAppointments(@Param("donor") Donor donor);
     @Query("SELECT a FROM Appointment a WHERE a.doctor = :doctor")
     List<Appointment> findAppointmentsByDoctor(@Param("doctor") Doctor doctor);
+
+   @Query("SELECT a FROM Appointment a WHERE  a.date = :now")
+    List<Appointment> findByDate(LocalDate now);
 }
